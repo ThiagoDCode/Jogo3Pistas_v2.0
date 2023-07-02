@@ -8,32 +8,34 @@ import os
 
 def menu(*options):
     """
-    Menu ex: ('option1', 'option2', 'option3')
+    Menu Dict, exemplo: ('1:option1', '2:option2', '3:option3')
 
-    :param options: Lista de opções
-    :return: Retorna o número da opção
+    :param options: Dict de opções ('chave:valor'...)
+    :return: Retorna o nome da opção (VALOR da chave)
     """
 
     os.system('cls')
     tamanho = 30
+    opt_dict = {}
+
+    for opt in options:
+        opt_split = opt.split(':')
+        opt_dict[opt_split[0]] = opt_split[1]
 
     print(f'+{"=" * tamanho}+')
     print(f'|{"MENU":^{tamanho}}|')
     print(f'+{"-" * tamanho}+')
-    for c, op in enumerate(options):
-        print(f'|{f" {c+1} - {op}":{tamanho}}|')
+    for k, v in opt_dict.items():
+        print(f'|{f" {k} - {v}":{tamanho}}|')
     print(f'+{"=" * tamanho}+')
 
     while True:
-        try:
-            resposta = int(input('|> '))
-        except ValueError:
-            print(erro_cor('ERRO! Digite apenas um número INTEIRO...'))
+        resposta = input('|> ')
+
+        if resposta not in opt_dict:
+            print(erro_cor('ERRO! Opção inválida, tente novamente...'))
         else:
-            if 0 < resposta <= len(options):
-                return resposta
-            else:
-                print(erro_cor('ERRO! Opção inválida, tente novamente...'))
+            return opt_dict[resposta]
 
 
 def continuar_parar(continuar, parar, text=''):
