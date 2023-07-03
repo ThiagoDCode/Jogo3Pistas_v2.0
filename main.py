@@ -12,22 +12,22 @@ from palavras import dict_palavras
 
 acertos = []
 pontuacao = 0
-list_copy = dict_palavras.copy()
+dict_copy = dict_palavras.copy()
 cont_palavra = 0
 
 
 def palavra_dica():
-    global cont_palavra, list_copy
+    global cont_palavra, dict_copy
     os.system('cls')
 
-    if len(list_copy) == 0:
+    if not dict_copy:
         print('\nParabéns! Você ZEROU todas as palavras.\n'), os.system('pause')
         return False
 
-    palavra, dica = choice(list(list_copy.items()))
+    palavra, dica = choice(list(dict_copy.items()))
     dica_iter = iter(dica)
     cont_palavra += 1
-    list_copy.pop(palavra)
+    dict_copy.pop(palavra)
 
     return verificar_resp(palavra, dica_iter)
 
@@ -67,13 +67,13 @@ def pontos_acertos():
 
 
 def reiniciar_jogo():
-    global list_copy, acertos, pontuacao, cont_palavra
+    global dict_copy, acertos, pontuacao, cont_palavra
 
     print()
     for i in op.progressbar(range(100), 'Reiniciando Jogo: ', 50):
         sleep(0.03)
 
-    list_copy = dict_palavras.copy()
+    dict_copy = dict_palavras.copy()
     acertos.clear()
     pontuacao = 0
     cont_palavra = 0
