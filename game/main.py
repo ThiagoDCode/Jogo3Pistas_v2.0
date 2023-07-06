@@ -83,30 +83,29 @@ def reiniciar_jogo():
 
 
 while True:
-    match op.menu('1:Iniciar Jogo', '2:Ver Pontuação', '3:Reiniciar Jogo', '4:Sair do Jogo'):
+    match op.menu('1:INICIAR JOGO', '2:VER PONTUAÇÃO', '3:REINICIAR JOGO', '4:SAIR DO JOGO'):
 
-        case 'Sair do Jogo':
+        case 'SAIR DO JOGO':
             print('Encerrando Jogo... Obrigado por brincar!\n')
             sleep(2)
             break
 
-        case 'Iniciar Jogo':
+        case 'INICIAR JOGO':
             while True:
                 if not palavra_dica():
                     break
-                match op.menu('1:Próxima Palavra', '2:Menu Principal'):
-                    case 'Menu Principal':
+                match op.menu('1:PRÓXIMA PALAVRA', '2:MENU PRINCIPAL'):
+                    case 'MENU PRINCIPAL':
                         break
 
-        case 'Ver Pontuação':
+        case 'VER PONTUAÇÃO':
             pontos_acertos()
 
-        case 'Reiniciar Jogo':
+        case 'REINICIAR JOGO':
             os.system('cls')
             print(f'\n{op.cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação!')
-            reiniciar = op.continuar_parar('S', 'N', 'Deseja reiniciar? [S/N]: ')
 
-            if reiniciar:
+            if op.continuar('Deseja reiniciar? [S/N]: ', 'S', 'N'):
                 reiniciar_jogo()
 
 
