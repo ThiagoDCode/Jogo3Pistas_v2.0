@@ -4,7 +4,8 @@
 ##############################################################################################
 
 
-from game import *
+import game
+import control_filters as op
 from time import sleep
 import os
 
@@ -19,22 +20,22 @@ while True:
 
         case 'INICIAR JOGO':
             while True:
-                if not palavra_dica():
+                if not game.palavra_dica():
                     break
                 match op.menu('1:PRÓXIMA PALAVRA', '2:MENU PRINCIPAL'):
                     case 'MENU PRINCIPAL':
                         break
 
         case 'VER PONTUAÇÃO':
-            pontos_acertos()
+            game.pontos_acertos()
 
         case 'REINICIAR JOGO':
             os.system('cls')
             print(f'\n{op.cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação!')
 
             if op.continuar('Deseja reiniciar? [S/N]: ', 'S', 'N'):
-                reiniciar_jogo()
+                game.reiniciar_jogo()
 
 
 print(op.cor(3, '<< FIM DE JOGO! >>'.center(31, '=')))
-pontos_acertos(True)
+game.pontos_acertos(True)
