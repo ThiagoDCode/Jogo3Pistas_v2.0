@@ -1,5 +1,5 @@
 from palavras import dict_palavras
-import menu_filters as op
+import control_filters as op
 from random import choice
 from time import sleep
 import os

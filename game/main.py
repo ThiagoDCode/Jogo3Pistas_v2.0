@@ -4,7 +4,7 @@
 ##############################################################################################
 
 
-from def_control import *
+from game import *
 from time import sleep
 import os
 

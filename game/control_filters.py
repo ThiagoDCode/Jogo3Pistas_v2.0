@@ -1,4 +1,3 @@
-
 import sys
 import os
 
@@ -67,14 +66,15 @@ def progressbar(it, prefix='', size=60, file=sys.stdout):
     count = len(it)
 
     def show(j):
-        x = int(size*j/count)
-        file.write('%s[%s%s] %i/%i\r' % (prefix, '#'*x, '.'*(size-x), j, count))
+        x = int(size * j / count)
+        file.write('%s[%s%s] %i/%i\r' % (prefix, '#' * x, '.' * (size - x), j, count))
         file.flush()
+
     show(0)
 
     for cont, item in enumerate(it):
         yield item
-        show(cont+1)
+        show(cont + 1)
     file.write('\n')
     file.flush()
 
@@ -88,11 +88,21 @@ def cor(cor=0, txt=''):
     """
 
     cores = {
-        0: '\033[m',    # Neutro
+        0: '\033[m',  # Neutro
         1: '\033[34m',  # Azul
         2: '\033[32m',  # Verde
         3: '\033[93m',  # Amarelo
-        4: '\033[31m'   # Vermelho
+        4: '\033[31m'  # Vermelho
     }
 
     return cores[cor] + txt + cores[0]
+
+
+def verify_entry(txt: str) -> str:
+    while True:
+        resposta = input(txt).strip()
+
+        if resposta == '':
+            print(erro_cor('ERRO! Responda com algo válido'))
+        else:
+            return resposta
