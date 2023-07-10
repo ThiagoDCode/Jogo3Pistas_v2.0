@@ -19,28 +19,29 @@ def palavra_dica():
         print('\nParabéns! Você ZEROU todas as palavras.\n'), os.system('pause')
         return False
 
-    palavra, dica = choice(list(copia_palavras.items()))
-    dica_iter = iter(dica)
+    palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
+    dica_iter = iter(dicas_palavra)
     cont_palavra += 1
-    copia_palavras.pop(palavra)
+    copia_palavras.pop(palavra_selecionada)
 
-    return verificar_resp(palavra, dica_iter)
+    return verificar_resp(palavra_selecionada, dica_iter)
 
 
-def verificar_resp(palavra_selecionada, dicas):
+def verificar_resp(palavra, dicas):
     global acertos, pontuacao
 
     print(f'\n========<< PALAVRA  {cont_palavra}/{len(dict_palavras)} >>========')
-    print(f'| {f"Palavra com {len(palavra_selecionada)} letras":^31} |\n'
+    print(f'| {f"Palavra com {len(palavra)} letras":^31} |\n'
           f'{"=" * 35}')
 
     for cont, pontos in enumerate([10, 8, 6]):
         print(f'|> A {cont+1}ª dica é: [ { op.cor(2, next(dicas)) } ]')
         resposta = input('Qual é a palavra? ').strip()
 
-        if resposta.lower() == palavra_selecionada:
-            print(f'\nAcertou! {op.cor(1, palavra_selecionada.upper())} => ganhou {op.cor(1, str(pontos) + " pontos")}\n')
-            acertos.append(f'{op.cor(1, palavra_selecionada.upper())} (acertou na {cont+1}ª dica: {pontos}pnt)')
+        if resposta.lower() == palavra:
+            print(f'\nAcertou! {op.cor(1, palavra.upper())} => ganhou {op.cor(1, str(pontos) + " pontos")}\n')
+
+            acertos.append(f'{op.cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}pnt)')
             pontuacao += pontos
             os.system('pause')
             return True

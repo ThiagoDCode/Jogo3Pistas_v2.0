@@ -1,6 +1,3 @@
-"""
-Complementos de Personalização e Validação.
-"""
 
 import sys
 import os
@@ -8,7 +5,8 @@ import os
 
 def menu(*options):
     """ Menu Dict, exemplo: ('1:option1', '2:option2', '3:option3')
-    :param options: Dict de opções ('chave:valor'...)
+
+    :param options: Parâmetros chave/valor ('1:option1'...)
     :return: Retorna o nome da opção (VALOR da chave)
     """
 
@@ -24,7 +22,7 @@ def menu(*options):
     print(f'|{"MENU":^{tamanho}}|')
     print(f'+{"-" * tamanho}+')
     for k, v in opt_dict.items():
-        print(f'|{f" {k} - {v}":{tamanho}}|')
+        print(f'|{f" [{k}] - {v}":{tamanho}}|')
     print(f'+{"=" * tamanho}+')
 
     while True:
@@ -37,7 +35,8 @@ def menu(*options):
 
 
 def continuar(texto, y, n):
-    """ Validação de continuar/parar...
+    """ Validação de continuar/parar
+
     :param texto: Texto exibido ao usuário
     :param y: Valor retornará True (ex: "S")
     :param n: Valor retornará False (ex: "N")
@@ -59,6 +58,7 @@ def erro_cor(txt):
 
 def progressbar(it, prefix='', size=60, file=sys.stdout):
     """ Barra de loading
+
     :param it: range da barra (ex: range(100))
     :param prefix: Texto de Exibição
     :param size: tamanho
@@ -81,6 +81,7 @@ def progressbar(it, prefix='', size=60, file=sys.stdout):
 
 def cor(cor=0, txt=''):
     """ Colore uma string.
+
     :param cor: Número da cor
     :param txt: String que será colorida
     :return: Retorna a string colorida
