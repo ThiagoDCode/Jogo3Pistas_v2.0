@@ -8,13 +8,19 @@ while True:
     match op.menu('1:INICIAR JOGO', '2:PLACAR GERAL', '3:SAIR DO JOGO'):
 
         case 'SAIR DO JOGO':
-            game.pontos_acertos(True)
-            print('Obrigado por brincar 0/\n')
+            print(op.cor(2, '\nObrigado por brincar 0/\n'))
             sleep(2), exit()
 
         case 'INICIAR JOGO':
-            nick_name = game.nick_name()
-            print(f'\nVamos aos jogos, {nick_name}')
+            if not os.path.exists('placar_geral.txt'):
+                with open('placar_geral.txt', 'w', encoding='UTF-8') as file:
+                    file.write(f'{"Bot"}:{0}\n')
+                    file.close()
+
+            nick_name = game.nick_name('placar_geral.txt')
+            if not nick_name:
+                continue
+            print(f'\nVamos aos jogos 🎲, {op.cor(3, nick_name)}')
             sleep(2)
 
             while True:
@@ -28,7 +34,7 @@ while True:
                         game.palavra_dica()
 
                     case 'PONTUAÇÃO':
-                        game.pontos_acertos()
+                        game.pontos_acertos(nick_name)
 
                     case 'REINICIAR PARTIDA':
                         game.reiniciar_jogo()

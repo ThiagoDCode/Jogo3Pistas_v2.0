@@ -1,3 +1,4 @@
+import game
 import sys
 import os
 
@@ -116,3 +117,27 @@ def continuar(texto, y, n):
             return False
 
         print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"...'))
+
+
+def nick_name(arquivo):
+    os.system('cls')
+
+    while True:
+        disponivel = True
+
+        nick = input('Nick Name: ').strip()
+        if nick == '':
+            return False
+
+        elif 3 <= len(nick) <= 12 and nick.isalnum():
+            with open(arquivo, 'r', encoding='UTF-8') as file:
+                for nick_name in file.readlines():
+                    if nick_name[:nick_name.index(':')].lower() == nick.lower():
+                        print(erro_cor('ERRO! Nick Name indisponível\n'))
+                        disponivel = False
+                        break
+            if disponivel:
+                return nick
+        else:
+            print(erro_cor('ERRO! Nick Name deve conter apenas letras e/ou números'
+                           'de 3 a 12 caracteres no máximo\n'))

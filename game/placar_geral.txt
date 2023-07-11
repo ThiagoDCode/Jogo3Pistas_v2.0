@@ -1,6 +1,2 @@
-Dallas:18
-Lee:35
-Thiago:16
-Nielly:20
-Ninja:18
-NicNic:16
+Bot:0
+Dallas:22

@@ -62,23 +62,16 @@ def verificar_resp(palavra, dicas):
     return True
 
 
-def pontos_acertos(final=False):
+def pontos_acertos(nick_exibe):
     os.system('cls')
 
-    if final:  # TODO: invés, será exibido o rankin dos 10 primeiros, por exemplo
-        print(cor(3, '<< FIM DE JOGO! >>'.center(50, '=')),
-              f'\nPalavras acertadas:')
-        for acerto in acertos:
-            print(f' => {acerto}')
-        print(f'Acertos totais: {cor(1, str(len(acertos)))}\n'
-              f'Pontuação final: {cor(1, str(pontuacao) + " pontos")}\n')
-    else:
-        print(cor(3, '<< PONTUAÇÃO >>'.center(50, '=')),
-              f'\nVocê teve {len(acertos)} acerto(s): ')
-        for acerto in acertos:
-            print(f' => {acerto}')
-        print(f'Pontuação: {cor(1, str(pontuacao) + " pontos")}\n')
-        os.system('pause')
+    print(cor(3, f'<< {nick_exibe} >>'.center(50, '=')),
+          f'\nVocê teve {len(acertos)} acerto(s): ')
+    for acerto in acertos:
+        print(f' => {acerto}')
+    print(f'Pontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
+          f'{"-" * 50}')
+    os.system('pause')
 
 
 def reiniciar_jogo(nova_partida=False):
@@ -106,30 +99,17 @@ def reiniciar_jogo(nova_partida=False):
             os.system('pause')
 
 
-def nick_name():
-    os.system('cls')
-    while True:
-        nick = input('Nick Name: ').strip()
-        if 3 <= len(nick) <= 12:
-            return nick
-        else:
-            print(erro_cor('ERRO! Nick Name deve conter de 3 a 12 caracteres no máximo'))
-
-
 def save_placar(arquivo, nick, pontos):
-    placar = [{nick: pontos}]
-    if not os.path.exists(arquivo):
-        with open(arquivo, 'w', encoding='UTF-8') as save:
-            save.write(f'{nick}:{pontos}\n')
-            save.close()
-    else:
+    if pontos != 0:
         with open(arquivo, 'a', encoding='UTF-8') as save:
             save.write(f'{nick}:{pontos}\n')
             save.close()
 
 
 def exibir_placar(arquivo):
+    os.system('cls')
     lista_placares = []
+
     try:
         with open(arquivo, 'r', encoding='UTF-8') as file:
             for placar in file.readlines():
@@ -137,13 +117,19 @@ def exibir_placar(arquivo):
                 lista_placares.append([placar[0], placar[1].replace('\n', '')])
 
         ranking = sorted(lista_placares, key=itemgetter(1), reverse=True)
-        for rank in ranking:
-            print(f'Nick: {rank[0]} -> Pontuação: {rank[1]}')
+        # PRINT -------------------------------------------------------------------------------------
+        print(f'<< RANKING >>'.center(33, '='))
+        print(f'| {"Noª"} {"NICK":<15} {"PONTUAÇÃO"} |')
+        print(f'-' * 33)
+        for c, rank in enumerate(ranking):
+            if c == 0:
+                print(f'|{"👑":^3} {cor(3, f"{rank[0]:.<15}")} {cor(3, f"{rank[1]:<3} Record")}|')
+            else:
+                print(f'| {c+1:^3} {rank[0]:.<15} {rank[1]:<10}|')
+            if c == 8:
+                break
+        print('=' * 33)
+        # ------------------------------------------------------------------------------------- PRINT
 
     except FileNotFoundError:
         print(erro_cor('\nERRO! Arquivo não encontrado\n'))
-        os.system('pause')
-
-
-if __name__ == '__main__':
-    print(nick_name())
