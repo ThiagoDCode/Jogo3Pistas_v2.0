@@ -1,5 +1,5 @@
 from palavras import dict_palavras
-import control_filters as op
+from control_filters import *
 from random import choice
 from time import sleep
 import os
@@ -20,34 +20,40 @@ def palavra_dica():
         return False
 
     palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
-    dica_iter = iter(dicas_palavra)
     cont_palavra += 1
     copia_palavras.pop(palavra_selecionada)
 
-    return verificar_resp(palavra_selecionada, dica_iter)
+    return verificar_resp(palavra_selecionada, dicas_palavra)
 
 
 def verificar_resp(palavra, dicas):
     global acertos, pontuacao
-
-    print(f'\n========<< PALAVRA  {cont_palavra}/{len(dict_palavras)} >>========')
-    print(f'| {f"Palavra com {len(palavra)} letras":^31} |\n'
-          f'{"=" * 35}')
+    dica_iter = iter(dicas)
 
     for cont, pontos in enumerate([10, 8, 6]):
-        print(f'|> A {cont+1}ª dica é: [ { op.cor(2, next(dicas)) } ]')
-        resposta = input('Qual é a palavra? ').strip()
+        os.system('cls')
+
+        print(f'<< PALAVRA  {cont_palavra}/{len(dict_palavras)} >>'.center(60, '='))
+        print(f'| {f"Palavra com {len(palavra)} letras":^56} |\n'
+              f'{"=" * 60}')
+        for dica in dicas[:cont+1]:
+            print(cor(5, f'[ {dica.upper()} ]'), end=' ')
+        print()
+
+        print(f'\nA {cont+1}ª dica é [{cor(2, next(dica_iter))}], Qual a palavra? ')
+        resposta = verify_entry('|> ')
 
         if resposta.lower() == palavra:
-            print(f'\nAcertou! {op.cor(1, palavra.upper())} => ganhou {op.cor(1, str(pontos) + " pontos")}\n')
+            print(f'\nAcertou! {cor(1, palavra.upper())} => ganhou {cor(1, str(pontos) + " pontos")}\n')
 
-            acertos.append(f'{op.cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}pnt)')
+            acertos.append(f'{cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}pnt)')
             pontuacao += pontos
             os.system('pause')
             return True
         else:
-            print('\nERRADA!', end=' ')
+            print(f'\n{cor(3, "ERROOOUU!")}', end=' ')
             print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
+            sleep(3)
 
     os.system('pause')
     return True
@@ -60,13 +66,13 @@ def pontos_acertos(final=False):
         print(f'Palavras acertadas:')
         for acerto in acertos:
             print(f' => {acerto}')
-        print(f'Acertos totais: {op.cor(1, str(len(acertos)))}\n'
-              f'Pontuação final: {op.cor(1, str(pontuacao) + " pontos")}')
+        print(f'Acertos totais: {cor(1, str(len(acertos)))}\n'
+              f'Pontuação final: {cor(1, str(pontuacao) + " pontos")}\n')
     else:
         print(f'\nVocê teve {len(acertos)} acerto(s): ')
         for acerto in acertos:
             print(f' => {acerto}')
-        print(f'Pontuação: {op.cor(1, str(pontuacao) + " pontos")}\n')
+        print(f'Pontuação: {cor(1, str(pontuacao) + " pontos")}\n')
         os.system('pause')
 
 
@@ -74,7 +80,7 @@ def reiniciar_jogo():
     global copia_palavras, acertos, pontuacao, cont_palavra
 
     print()
-    for i in op.progressbar(range(100), 'Reiniciando Jogo: ', 50):
+    for i in progressbar(range(100), 'Reiniciando Jogo: ', 50):
         sleep(0.03)
 
     copia_palavras = dict_palavras.copy()
@@ -82,5 +88,5 @@ def reiniciar_jogo():
     pontuacao = 0
     cont_palavra = 0
 
-    print(f'{op.cor(3, "JOGO REINICIADO COM SUCESSO!")}\n')
+    print(f'{cor(3, "JOGO REINICIADO COM SUCESSO!")}\n')
     os.system('pause')

@@ -22,6 +22,7 @@ while True:
             while True:
                 if not game.palavra_dica():
                     break
+
                 match op.menu('1:PRÓXIMA PALAVRA', '2:MENU PRINCIPAL'):
                     case 'MENU PRINCIPAL':
                         break

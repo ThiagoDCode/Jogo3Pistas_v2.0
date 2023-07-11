@@ -33,24 +33,6 @@ def menu(*options):
             return opt_dict[resposta]
 
 
-def continuar(texto, y, n):
-    """ Validação de continuar/parar
-
-    :param texto: Texto exibido ao usuário
-    :param y: Valor retornará True (ex: "S")
-    :param n: Valor retornará False (ex: "N")
-    """
-
-    while True:
-        resposta = input(texto).strip().lower()
-        if resposta == str(y).lower():
-            return True
-        elif resposta == str(n).lower():
-            return False
-
-        print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"...'))
-
-
 def erro_cor(txt):
     return '\033[1;31m' + txt + '\033[m'
 
@@ -88,17 +70,27 @@ def cor(cor=0, txt=''):
     """
 
     cores = {
-        0: '\033[m',  # Neutro
-        1: '\033[34m',  # Azul
-        2: '\033[32m',  # Verde
-        3: '\033[93m',  # Amarelo
-        4: '\033[31m'  # Vermelho
+        0: '\033[m',     # Neutro
+        1: '\033[34m',   # Azul
+        2: '\033[32m',   # Verde
+        3: '\033[93m',   # Amarelo
+        4: '\033[31m',   # Vermelho
+        5: '\033[7;32m'  # Fundo Verde
     }
 
     return cores[cor] + txt + cores[0]
 
 
 def verify_entry(txt: str) -> str:
+    """ Valida a entrada do usuário
+
+    Args:
+        txt (str): Texto exibido ao usuário
+
+    Returns:
+        str: Retorna a resposta do usuário validada
+    """
+    
     while True:
         resposta = input(txt).strip()
 
@@ -106,3 +98,21 @@ def verify_entry(txt: str) -> str:
             print(erro_cor('ERRO! Responda com algo válido'))
         else:
             return resposta
+
+
+def continuar(texto, y, n):
+    """ Validação de continuar/parar
+
+    :param texto: Texto exibido ao usuário
+    :param y: Valor retornará True (ex: "S")
+    :param n: Valor retornará False (ex: "N")
+    """
+
+    while True:
+        resposta = input(texto).strip().lower()
+        if resposta == str(y).lower():
+            return True
+        elif resposta == str(n).lower():
+            return False
+
+        print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"...'))

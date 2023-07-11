@@ -7,7 +7,7 @@ dict_palavras = {
     'leão': ['Rei', 'Juba', 'Selva'],
     'macaco': ['Evolução Humana', 'Banana', 'Pula Árvores'],
     'abelha': ['Inseto', 'Amarelo e Preto', 'Mel'],
-    'matemática': ['Pesadelo na Escola', 'Equação', 'Cálculos'],
+    'matemática': ['Pesadelo da Escola', 'Equação', 'Cálculos'],
     'livro': ['Conhecimento', 'Papel', 'Estudos'],
     'triângulo': ['Forma Geométrica', 'Três Lados', 'das Bermudas'],
     'história': ['Passado', 'Contos', 'Para Dormir'],
