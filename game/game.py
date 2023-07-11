@@ -69,8 +69,9 @@ def pontos_acertos(nick_exibe):
           f'\nVocê teve {len(acertos)} acerto(s): ')
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'Pontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
+    print(f'\nPontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
           f'{"-" * 50}')
+    print()
     os.system('pause')
 
 
