@@ -1,3 +1,0 @@
-Bot:0
-HomeLander:24
-Dallas:24
