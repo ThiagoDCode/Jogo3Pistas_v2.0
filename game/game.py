@@ -33,9 +33,9 @@ def verificar_resp(palavra, dicas):
     for cont, pontos in enumerate([10, 8, 6]):
         os.system('cls')
 
-        print(f'<< PALAVRA  {cont_palavra}/{len(dict_palavras)} >>'.center(60, '='))
-        print(f'| {f"Palavra com {len(palavra)} letras":^56} |\n'
-              f'{"=" * 60}')
+        print(f'<< PALAVRA  {cont_palavra}/{len(dict_palavras)} >>'.center(50, '='))
+        print(f'| {f"Palavra com {len(palavra)} letras":^46} |\n'
+              f'{"=" * 50}')
         for dica in dicas[:cont+1]:
             print(cor(5, f'[ {dica.upper()} ]'), end=' ')
         print()
@@ -53,7 +53,7 @@ def verificar_resp(palavra, dicas):
         else:
             print(f'\n{cor(3, "ERROOOUU!")}', end=' ')
             print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
-            sleep(3)
+            sleep(2)
 
     os.system('pause')
     return True
@@ -63,13 +63,15 @@ def pontos_acertos(final=False):
     os.system('cls')
 
     if final:
-        print(f'Palavras acertadas:')
+        print(cor(3, '<< FIM DE JOGO! >>'.center(50, '=')), 
+              f'\nPalavras acertadas:')
         for acerto in acertos:
             print(f' => {acerto}')
         print(f'Acertos totais: {cor(1, str(len(acertos)))}\n'
               f'Pontuação final: {cor(1, str(pontuacao) + " pontos")}\n')
     else:
-        print(f'\nVocê teve {len(acertos)} acerto(s): ')
+        print(cor(3, '<< PONTUAÇÃO >>'.center(50, '=')),
+              f'\nVocê teve {len(acertos)} acerto(s): ')
         for acerto in acertos:
             print(f' => {acerto}')
         print(f'Pontuação: {cor(1, str(pontuacao) + " pontos")}\n')

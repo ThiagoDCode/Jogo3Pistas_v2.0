@@ -38,5 +38,4 @@ while True:
                 game.reiniciar_jogo()
 
 
-print(op.cor(3, '<< FIM DE JOGO! >>'.center(31, '=')))
 game.pontos_acertos(True)
