@@ -91,7 +91,7 @@ def reiniciar_jogo(nova_partida=False):
         print(f'\n{cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação!')
         if continuar('Deseja reiniciar? [S/N]: ', 'S', 'N'):
             print()
-            for i in progressbar(range(100), 'Reiniciando Jogo: ', 50):
+            for i in progressbar(range(100), 'Reiniciando Partida: ', 30):
                 sleep(0.03)
 
             copia_palavras = dict_palavras.copy()
@@ -133,7 +133,7 @@ def exibir_placar(arquivo):
         for nick, pontos in (ranking):
             if cont == 0:
                 record = [nick, pontos]
-                print(f'|{"👑":2}   {cor(3, f"{nick:.<15}")} {cor(3, f"{pontos:<3} Record")}|')
+                print(f'|{"👑":>2}  {cor(3, f"{nick:.<15}")} {cor(3, f"{pontos:<3} Record")}|')
             else:
                 print(f'| {cont+1:^3} {nick:.<15} {pontos:<10}|')
             if cont == 8:

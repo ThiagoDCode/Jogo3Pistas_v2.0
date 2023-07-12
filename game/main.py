@@ -9,13 +9,14 @@ print(f'{"="*70}'
       f'\n|{"JOGO DAS 3 PISTAS".center(68)}|\n'
       f'{"[ Regras ]".center(70, "=")}')
 print(f'\n1. Você deve descobrir a palavra secreta através das pistas dadas'
-      f'\n2. Você tem até 3 tentativas, cada tentativa te dá uma dica a mais'
-      f'\n3. Cada dica vale uma pontuação, quanto menor a dica, maior os pontos\n'
+      f'\n2. Você tem até 3 tentativas, cada tentativa te dá uma dica extra'
+      f'\n3. Cada dica vale uma pontuação, menor a dica, maior a pontuação\n'
       f'\n{op.cor(2, "[ Dica 1: 10 pontos | Dica 2: 8 pontos | Dica 3: 6 pontos ]").center(78, "=")}\n')
 # ------------------------------------------------------------------------------------------------ PRINT
 os.system('pause')
 game.exibir_placar('placar_geral.txt')
-sleep(3)
+for i in op.progressbar(range(100), 'DCode', 20):
+    sleep(0.04)
 
 while True:
     match op.menu('1:INICIAR JOGO', '2:PLACAR GERAL', '3:SAIR DO JOGO'):
