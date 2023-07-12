@@ -10,15 +10,17 @@ cont_palavra = 0
 acertos = []
 pontuacao = 0
 copia_palavras = dict_palavras.copy()
+record = []
+lista_placares = []
 
 
-def palavra_dica(nick_finalista):
+def palavra_dica():
     os.system('cls')
     global cont_palavra
 
     if not copia_palavras:
         print('\nParabéns! Você ZEROU todas as palavras.\n'), sleep(2)
-        return pontos_acertos(nick_finalista)
+        return pontos_acertos()
 
     palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
     cont_palavra += 1
@@ -60,15 +62,19 @@ def verificar_resp(palavra, dicas):
     return True
 
 
-def pontos_acertos(nick_exibe):
+def pontos_acertos():
     os.system('cls')
 
-    print(f'<< {cor(3, nick_exibe)} >>'.center(50, '='),
+    print(f'<< {cor(1, "SUA PONTUAÇÃO")} >>'.center(50, '='),
           f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
         print(f' => {acerto}')
     print(f'\nPontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
           f'{"-" * 42}')
+
+    # RECORDE ATUAL / BATEU RECORD
+    print(f'RECORD [ {record[1]}P 👑{record[0]} ]\n'.center(42))
+
     os.system('pause')
 
 
@@ -106,28 +112,36 @@ def save_placar(arquivo, nick, pontos):
 
 def exibir_placar(arquivo):
     os.system('cls')
-    lista_placares = []
+    global record
 
     try:
         with open(arquivo, 'r', encoding='UTF-8') as file:
-            for placar in file.readlines():
-                placar = placar.split(':')
-                lista_placares.append([placar[0], placar[1].replace('\n', '')])
+            placares = file.readlines()
+            file.close()
+
+        for placar in placares:
+            placar = placar.split(':')
+            lista_placares.append([placar[0], int(placar[1].replace('\n', ''))])
 
         ranking = sorted(lista_placares, key=itemgetter(1), reverse=True)
+        cont = 0
+
         # PRINT -------------------------------------------------------------------------------------
         print(f'<< RANKING >>'.center(33, '='))
         print(f'| {"Noª"} {"NICK":<15} {"PONTUAÇÃO"} |')
         print(f'-' * 33)
-        for c, rank in enumerate(ranking):
-            if c == 0:
-                print(f'|{"👑":^3} {cor(3, f"{rank[0]:.<15}")} {cor(3, f"{rank[1]:<3} Record")}|')
+        for nick, pontos in (ranking):
+            if cont == 0:
+                record = [nick, pontos]
+                print(f'|{"👑":2}   {cor(3, f"{nick:.<15}")} {cor(3, f"{pontos:<3} Record")}|')
             else:
-                print(f'| {c+1:^3} {rank[0]:.<15} {rank[1]:<10}|')
-            if c == 8:
+                print(f'| {cont+1:^3} {nick:.<15} {pontos:<10}|')
+            if cont == 8:
                 break
+            cont += 1
         print('=' * 33)
         # ------------------------------------------------------------------------------------- PRINT
+        lista_placares.clear()
 
     except FileNotFoundError:
         print(erro_cor('\nERRO! Arquivo não encontrado\n'))

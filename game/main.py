@@ -3,6 +3,19 @@ import control_filters as op
 from time import sleep
 import os
 
+os.system('cls')
+# PRINT ------------------------------------------------------------------------------------------------
+print(f'{"="*70}'
+      f'\n|{"JOGO DAS 3 PISTAS".center(68)}|\n'
+      f'{"[ Regras ]".center(70, "=")}')
+print(f'\n1. Você deve descobrir a palavra secreta através das pistas dadas'
+      f'\n2. Você tem até 3 tentativas, cada tentativa te dá uma dica a mais'
+      f'\n3. Cada dica vale uma pontuação, quanto menor a dica, maior os pontos\n'
+      f'\n{op.cor(2, "[ Dica 1: 10 pontos | Dica 2: 8 pontos | Dica 3: 6 pontos ]").center(78, "=")}\n')
+# ------------------------------------------------------------------------------------------------ PRINT
+os.system('pause')
+game.exibir_placar('placar_geral.txt')
+sleep(3)
 
 while True:
     match op.menu('1:INICIAR JOGO', '2:PLACAR GERAL', '3:SAIR DO JOGO'):
@@ -14,7 +27,7 @@ while True:
         case 'INICIAR JOGO':
             if not os.path.exists('placar_geral.txt'):
                 with open('placar_geral.txt', 'w', encoding='UTF-8') as file:
-                    file.write(f'{"Bot"}:{0}\n')
+                    file.write(f'{"Bot"}:{6}\n')
                     file.close()
 
             nick_name = game.nick_name('placar_geral.txt')
@@ -31,10 +44,10 @@ while True:
                         break
 
                     case 'JOGAR PALAVRA':
-                        game.palavra_dica(nick_name)
+                        game.palavra_dica()
 
                     case 'PONTUAÇÃO':
-                        game.pontos_acertos(nick_name)
+                        game.pontos_acertos()
 
                     case 'REINICIAR PARTIDA':
                         game.reiniciar_jogo()
