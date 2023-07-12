@@ -99,7 +99,7 @@ def reiniciar_jogo(nova_partida=False):
             pontuacao = 0
             cont_palavra = 0
 
-            print(f'{cor(3, "JOGO REINICIADO COM SUCESSO!")}\n')
+            print(f'{cor(3, "PARTIDA REINICIADA COM SUCESSO!")}\n')
             os.system('pause')
 
 

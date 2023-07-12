@@ -3,6 +3,13 @@ import control_filters as op
 from time import sleep
 import os
 
+
+# Cria o arquivo onde serão armazenados os placares
+if not os.path.exists('placar_geral.txt'):
+    with open('placar_geral.txt', 'w', encoding='UTF-8') as file:
+        file.write(f'{"Bot"}:{6}\n')
+        file.close()
+
 os.system('cls')
 # PRINT ------------------------------------------------------------------------------------------------
 print(f'{"="*70}'
@@ -26,11 +33,6 @@ while True:
             sleep(2), exit()
 
         case 'INICIAR JOGO':
-            if not os.path.exists('placar_geral.txt'):
-                with open('placar_geral.txt', 'w', encoding='UTF-8') as file:
-                    file.write(f'{"Bot"}:{6}\n')
-                    file.close()
-
             nick_name = game.nick_name('placar_geral.txt')
             if not nick_name:
                 continue
