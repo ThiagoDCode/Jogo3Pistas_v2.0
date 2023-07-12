@@ -39,7 +39,7 @@ def erro_cor(txt):
 
 
 def progressbar(it, prefix='', size=60, file=sys.stdout):
-    """ Barra de loading
+    """ Barra de loading (Necessário ativar a RUM do IDE como saída em terminal)
 
     :param it: range da barra (ex: range(100))
     :param prefix: Texto de Exibição

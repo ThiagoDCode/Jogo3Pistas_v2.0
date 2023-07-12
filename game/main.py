@@ -50,7 +50,7 @@ while True:
                         game.palavra_dica()
 
                     case 'PONTUAÇÃO':
-                        game.pontos_acertos()
+                        game.pontos_acertos(nick_name)
 
                     case 'REINICIAR PARTIDA':
                         game.reiniciar_jogo()

@@ -62,9 +62,9 @@ def verificar_resp(palavra, dicas):
     return True
 
 
-def pontos_acertos():
+def pontos_acertos(nick_pts=''):
     os.system('cls')
-
+    # PRINT (pontuação) --------------------------------------------------------------------
     print(f'<< {cor(1, "SUA PONTUAÇÃO")} >>'.center(50, '='),
           f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
@@ -72,9 +72,14 @@ def pontos_acertos():
     print(f'\nPontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
           f'{"-" * 42}')
 
-    # RECORDE ATUAL / BATEU RECORD
-    print(f'RECORD [ {record[1]}P 👑{record[0]} ]\n'.center(42))
-
+    # PRINT (record) -----------------------------------------------------------------------
+    if pontuacao > record[1]:
+        print(f'Parabéns 🎉 {cor(3, nick_pts)}, é o novo Recordista\n')
+        print(f' RECORD [ {pontuacao}P 👑{cor(3, nick_pts)} ]'.center(49))
+    else:
+        print(f'RECORD [ {record[1]}P 👑{cor(3, record[0])} ]'.center(49))
+    print()
+    # -------------------------------------------------------------------------------- PRINT
     os.system('pause')
 
 
