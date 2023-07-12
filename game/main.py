@@ -33,7 +33,7 @@ while True:
             sleep(2), exit()
 
         case 'INICIAR JOGO':
-            nick_name = game.nick_name('placar_geral.txt')
+            nick_name = op.nick_name('placar_geral.txt')
             if not nick_name:
                 continue
             print(f'\nVamos aos jogos 🎲, {op.cor(3, nick_name)}')
@@ -47,7 +47,8 @@ while True:
                         break
 
                     case 'JOGAR PALAVRA':
-                        game.palavra_dica()
+                        if not game.palavra_dica():
+                            print('\nParabéns! Você ZEROU todas as palavras.\n'), sleep(2)
 
                     case 'PONTUAÇÃO':
                         game.pontos_acertos(nick_name)
