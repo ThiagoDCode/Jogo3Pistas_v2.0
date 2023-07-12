@@ -1,5 +1,3 @@
-import string
-
 from palavras import dict_palavras
 from control_filters import *
 from random import choice
@@ -14,13 +12,13 @@ pontuacao = 0
 copia_palavras = dict_palavras.copy()
 
 
-def palavra_dica():
+def palavra_dica(nick_finalista):
     os.system('cls')
     global cont_palavra
 
     if not copia_palavras:
-        print('\nParabéns! Você ZEROU todas as palavras.\n'), os.system('pause')
-        return pontos_acertos()
+        print('\nParabéns! Você ZEROU todas as palavras.\n'), sleep(2)
+        return pontos_acertos(nick_finalista)
 
     palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
     cont_palavra += 1
@@ -49,7 +47,7 @@ def verificar_resp(palavra, dicas):
         if resposta.lower() == palavra:
             print(f'\nAcertou! {cor(1, palavra.upper())} => ganhou {cor(1, str(pontos) + " pontos")}\n')
 
-            acertos.append(f'{cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}pnt)')
+            acertos.append(f'{cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}P)')
             pontuacao += pontos
             os.system('pause')
             return True
@@ -65,12 +63,12 @@ def verificar_resp(palavra, dicas):
 def pontos_acertos(nick_exibe):
     os.system('cls')
 
-    print(cor(3, f'<< {nick_exibe} >>'.center(50, '=')),
-          f'\nVocê teve {len(acertos)} acerto(s): ')
+    print(f'<< {cor(3, nick_exibe)} >>'.center(50, '='),
+          f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'Pontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
-          f'{"-" * 50}')
+    print(f'\nPontuação total: {cor(1, str(pontuacao) + " pontos")}\n'
+          f'{"-" * 42}')
     os.system('pause')
 
 
