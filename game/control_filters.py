@@ -9,21 +9,23 @@ def menu(*options):
     :param options: Parâmetros chave/valor ('1:option1'...)
     :return: Retorna o nome da opção (VALOR da chave)
     """
-
     os.system('cls')
     tamanho = 30
     opt_dict = {}
 
+    # Separa os elementos da Tupla de acordo com, os dois pontos (:) e, adiciona ao Dicionário (chave/valor)
     for opt in options:
         opt_split = opt.split(':')
         opt_dict[opt_split[0]] = opt_split[1]
 
+    # PRINT ------------------------------------------------------------------------------------------
     print(f'+{"=" * tamanho}+')
     print(f'|{"MENU":^{tamanho}}|')
     print(f'+{"-" * tamanho}+')
     for k, v in opt_dict.items():
         print(f'|{f" [{k}] - {v}":{tamanho}}|')
     print(f'+{"=" * tamanho}+')
+    # ------------------------------------------------------------------------------------------ PRINT
 
     while True:
         resposta = input('|> ')
@@ -43,9 +45,8 @@ def progressbar(it, prefix='', size=60, file=sys.stdout):
 
     :param it: range da barra (ex: range(100))
     :param prefix: Texto de Exibição
-    :param size: tamanho
+    :param size: Tamanho da barra de loading
     """
-
     count = len(it)
 
     def show(j):
@@ -69,7 +70,6 @@ def cor(cor=0, txt=''):
     :param txt: String que será colorida
     :return: Retorna a string colorida
     """
-
     cores = {
         0: '\033[m',     # Neutro
         1: '\033[34m',   # Azul
@@ -83,7 +83,7 @@ def cor(cor=0, txt=''):
 
 
 def verify_entry(txt: str) -> str:
-    """ Valida a entrada do usuário
+    """ Valida a entrada do usuário, evitando entradas vazias ('')
 
     Args:
         txt (str): Texto exibido ao usuário
@@ -108,7 +108,6 @@ def continuar(texto, y, n):
     :param y: Valor retornará True (ex: "S")
     :param n: Valor retornará False (ex: "N")
     """
-
     while True:
         resposta = input(texto).strip().lower()
         if resposta == str(y).lower():
@@ -120,19 +119,25 @@ def continuar(texto, y, n):
 
 
 def nick_name(arquivo):
+    """ Valida o Nick Name e verifica se o mesmo já existe ou não
+
+    :param arquivo: Arquivo .TXT onde está armazenado os placares
+    :return: Retorna o Nick-Name caso disponível, retorna False para saída
+    """
     os.system('cls')
 
     while True:
         disponivel = True
 
         nick = input('Nick Name: ').strip()
+        # Saída da criação de Nick-name, caso player não digite nada
         if nick == '':
             return False
-
+        # Nick deve ter entre 3 e 12 caracteres, e ser alpha numérico
         elif 3 <= len(nick) <= 12 and nick.isalnum():
             with open(arquivo, 'r', encoding='UTF-8') as file:
-                for nick_name in file.readlines():
-                    if nick_name[:nick_name.index(':')].lower() == nick.lower():
+                for name in file.readlines():
+                    if name[:name.index(':')].lower() == nick.lower():
                         print(erro_cor('ERRO! Nick Name indisponível\n'))
                         disponivel = False
                         break
