@@ -5,7 +5,6 @@ from time import sleep
 from operator import itemgetter
 import os
 
-
 palavras_jogadas = 0
 acertos = []
 pontuacao = 0
@@ -52,12 +51,12 @@ def verificar_resp(palavra, dicas):
         print(f'<< PALAVRA  {palavras_jogadas}/{len(dict_palavras)} >>'.center(52, '='))
         print(f'| {f"Palavra com {len(palavra)} letras":^48} |\n'
               f'{"=" * 52}')
-        for dica in dicas[:cont+1]:
+        for dica in dicas[:cont + 1]:
             print(cf.cor(5, f'[ {dica.upper()} ]'), end=' ')
         print()
         # --------------------------------------------------------------------------------------------- PRINT
 
-        print(f'\nA {cont+1}ª dica é [{cf.cor(2, next(dica_iter))}], Qual a palavra? ')
+        print(f'\nA {cont + 1}ª dica é [{cf.cor(2, next(dica_iter))}], Qual a palavra? ')
         resposta = cf.verify_entry('|> ')
 
         # Verifica a resposta
@@ -136,16 +135,28 @@ def reiniciar_jogo(nova_partida=False):
 
 
 def save_placar(arquivo, nick, pontos):
-    """ Salva no arquivo o nick name do player e sua pontuação
+    """ Salva no arquivo o Nick name do player e sua pontuação
 
     :param arquivo: Arquivo .TXT
     :param nick: Nick Name do player
     :param pontos: Pontuação do player
     """
-    if pontos != 0:
+    resposta = cf.continuar('\nSalvar pontuação (S/N ou C para cancelar)? ', 'S', 'N', 'C')
+
+    if pontos != 0 and resposta == True:
         with open(arquivo, 'a', encoding='UTF-8') as save:
             save.write(f'{nick}:{pontos}\n')
             save.close()
+
+        for i in cf.progressbar(range(100), 'Salvando: ', 22):
+            sleep(0.04)
+        print('\nPONTUAÇÃO SALVA COM SUCESSO!')
+        os.system('pause')
+        return True
+    elif resposta == 'C':
+        return False
+    else:
+        return True
 
 
 def exibir_placar(arquivo):
@@ -180,7 +191,7 @@ def exibir_placar(arquivo):
                 record = [nick, pontos]
                 print(f'|{"👑":>2}  {cf.cor(3, f"{nick:.<15}")} {cf.cor(3, f"{pontos:<3} Record")}|')
             else:
-                print(f'| {cont+1:^3} {nick:.<15} {pontos:<10}|')
+                print(f'| {cont + 1:^3} {nick:.<15} {pontos:<10}|')
             if cont == 8:
                 break
             cont += 1

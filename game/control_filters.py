@@ -29,7 +29,6 @@ def menu(*options):
 
     while True:
         resposta = input('|> ')
-
         if resposta not in opt_dict:
             print(erro_cor('ERRO! Opção inválida, tente novamente...'))
         else:
@@ -101,21 +100,24 @@ def verify_entry(txt: str) -> str:
             return resposta
 
 
-def continuar(texto, y, n):
-    """ Validação de continuar/parar
+def continuar(texto, y, n, c=False):
+    """ Validação de continuar/parar/cancelar
 
     :param texto: Texto exibido ao usuário
     :param y: Valor retornará True (ex: "S")
     :param n: Valor retornará False (ex: "N")
+    :param c: (opcional) Retorna o valor da resposta
     """
     while True:
-        resposta = input(texto).strip().lower()
-        if resposta == str(y).lower():
+        resposta = input(texto).strip().upper()
+        if resposta == str(y).upper():
             return True
-        elif resposta == str(n).lower():
+        elif resposta == str(n).upper():
             return False
+        elif resposta == str(c).upper():
+            return c
 
-        print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"...'))
+        print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"'), end=' '), print(erro_cor(f'ou "{c}"' if c else ''))
 
 
 def nick_name(arquivo):

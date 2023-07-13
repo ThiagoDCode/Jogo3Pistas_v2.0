@@ -42,7 +42,8 @@ while True:
             while True:
                 match op.menu('1:JOGAR PALAVRA', '2:PONTUAÇÃO', '3:REINICIAR PARTIDA', '4:FINALIZAR PARTIDA'):
                     case 'FINALIZAR PARTIDA':
-                        game.save_placar('placar_geral.txt', nick_name, game.pontuacao)
+                        if not game.save_placar('placar_geral.txt', nick_name, game.pontuacao):
+                            continue
                         game.reiniciar_jogo(nova_partida=True)
                         break
 
