@@ -143,7 +143,7 @@ def save_placar(arquivo, nick, pontos):
     """
     resposta = cf.continuar('\nSalvar pontuação (S/N ou C para cancelar)? ', 'S', 'N', 'C')
 
-    if pontos != 0 and resposta == True:
+    if pontos != 0 and resposta is True:
         with open(arquivo, 'a', encoding='UTF-8') as save:
             save.write(f'{nick}:{pontos}\n')
             save.close()
@@ -186,7 +186,7 @@ def exibir_placar(arquivo):
         print(f'<< RANKING >>'.center(33, '='))
         print(f'| {"Noª"} {"NICK":<15} {"PONTUAÇÃO"} |')
         print(f'-' * 33)
-        for nick, pontos in (ranking):
+        for nick, pontos in ranking:
             if cont == 0:
                 record = [nick, pontos]
                 print(f'|{"👑":>2}  {cf.cor(3, f"{nick:.<15}")} {cf.cor(3, f"{pontos:<3} Record")}|')

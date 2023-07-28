@@ -1,4 +1,3 @@
-import game
 import sys
 import os
 
@@ -42,6 +41,7 @@ def erro_cor(txt):
 def progressbar(it, prefix='', size=60, file=sys.stdout):
     """ Barra de loading (Necessário ativar a RUM do IDE como saída em terminal)
 
+    :param file:
     :param it: range da barra (ex: range(100))
     :param prefix: Texto de Exibição
     :param size: Tamanho da barra de loading
@@ -62,10 +62,10 @@ def progressbar(it, prefix='', size=60, file=sys.stdout):
     file.flush()
 
 
-def cor(cor=0, txt=''):
+def cor(cor_txt=0, txt=''):
     """ Colore uma string.
 
-    :param cor: Número da cor
+    :param cor_txt: Número da cor
     :param txt: String que será colorida
     :return: Retorna a string colorida
     """
@@ -78,7 +78,7 @@ def cor(cor=0, txt=''):
         5: '\033[7;32m'  # Fundo Verde
     }
 
-    return cores[cor] + txt + cores[0]
+    return cores[cor_txt] + txt + cores[0]
 
 
 def verify_entry(txt: str) -> str:
