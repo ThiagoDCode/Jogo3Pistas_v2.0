@@ -57,7 +57,12 @@ def verificar_resp(palavra, dicas):
         # --------------------------------------------------------------------------------------------- PRINT
 
         print(f'\nA {cont + 1}ª dica é [{cf.cor(next(dica_iter), 2)}], Qual a palavra? ')
-        resposta = cf.verify_entry('|> ')
+        while True:
+            resposta = input('|> ')
+            if resposta == "":
+                print(cf.cor("ERRO! Resposta inválida, tente novamente...", 4))
+            else:
+                break
 
         # Verifica a resposta
         if resposta.lower() == palavra:
@@ -147,7 +152,7 @@ def save_placar(arquivo, nick, pontos):
     :param pontos: Pontuação do player
     """
 
-    print("\nSalvar Pontuação [S/N] ou [C] para cancelar? ")
+    print("\nSair e salvar pontuação [S/N] ou [C] para cancelar? ")
     resposta = cf.continuar('S', 'N', 'C')
 
     if pontos != 0 and resposta is True:
@@ -157,7 +162,7 @@ def save_placar(arquivo, nick, pontos):
 
         for i in cf.progressbar(range(100), 'Salvando: ', 22):
             sleep(0.04)
-        print('\nPONTUAÇÃO SALVA COM SUCESSO!')
+        print(cf.cor('\nPONTUAÇÃO SALVA COM SUCESSO!', 3))
         os.system('pause')
         return True
     elif resposta == 'C':

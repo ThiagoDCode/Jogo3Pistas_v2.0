@@ -43,7 +43,7 @@ while True:
             nick_name = op.nick_name('placar_geral.txt')
             if not nick_name:
                 continue
-            print(f'\nVamos aos jogos 🎲, {op.cor(nick_name, 3)}')
+            print(f'\nVamos aos jogos 🎲 {op.cor(nick_name, 3)}')
             sleep(2)
 
             while True:

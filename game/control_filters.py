@@ -27,10 +27,6 @@ def menu(*options):
             print(cor("ERRO! Opção inválida, tente novamente...", 4))
 
 
-"""def erro_cor(txt):
-    return '\033[1;31m' + txt + '\033[m'"""
-
-
 def progressbar(it, prefix='', size=60, file=sys.stdout):
     """ Barra de loading (Necessário ativar a RUM do IDE como saída em terminal)
 
@@ -74,26 +70,7 @@ def cor(texto, num_cor=0):
     return cores[num_cor] + texto + cores[0]
 
 
-def verify_entry(txt: str) -> str:
-    """ Valida a entrada do usuário, evitando entradas vazias ('')
-
-    Args:
-        txt (str): Texto exibido ao usuário
-
-    Returns:
-        str: Retorna a resposta do usuário validada
-    """
-    
-    while True:
-        resposta = input(txt).strip()
-
-        if resposta == '':
-            print(cor('ERRO! Responda com algo válido', 4))
-        else:
-            return resposta
-
-
-def continuar(y, n, c=False):
+def continuar(Y, N, C=False):
     """ Validação de continuar/parar/cancelar
 
     :param y: Valor retornará True (ex: "S")
@@ -102,41 +79,43 @@ def continuar(y, n, c=False):
     """
     while True:
         resposta = input("|> ").strip().upper()
-        if resposta == str(y).upper():
+        if resposta == str(Y):
             return True
-        elif resposta == str(n).upper():
+        elif resposta == str(N):
             return False
-        elif resposta == str(c).upper():
-            return c
+        elif resposta == str(C):
+            return C
 
-        print(cor(f'ERRO! Responda apenas "{y}" ou "{n}"', 4), end=' '), print(cor(f'ou "{c}"' if c else '', 4))
+        print(cor(f"ERRO! Opção inválida, tente novamente...", 4))
 
 
 def nick_name(arquivo):
     """ Valida o Nick Name e verifica se o mesmo já existe ou não
 
-    :param arquivo: Arquivo .TXT onde está armazenado os placares
-    :return: Retorna o Nick-Name caso disponível, retorna False para saída
+    :param arquivo: Arquivo .TXT onde está armazenado as pontuações
+    :return: Retorna o Nick-Name caso disponível, retorna False para cancelar
     """
     os.system('cls')
 
     while True:
-        disponivel = True
+        nick_available = True
 
-        nick = input('Nick Name: ').strip()
-        # Saída da criação de Nick-name, caso player não digite nada
-        if nick == '':
+        nick = input('Seu Nickname: ').strip()
+        if nick == '':  # Saída da criação de Nickname, caso player não digite nada
             return False
+        
         # Nick deve ter entre 3 e 12 caracteres, e ser alpha numérico
         elif 3 <= len(nick) <= 12 and nick.isalnum():
+            
             with open(arquivo, 'r', encoding='UTF-8') as file:
                 for name in file.readlines():
                     if name[:name.index(':')].lower() == nick.lower():
-                        print(cor('ERRO! Nick Name indisponível\n', 4))
-                        disponivel = False
+                        print(cor('ERRO! Nickname indisponível\n', 4))
+                        nick_available = False
                         break
-            if disponivel:
+            
+            if nick_available:
                 return nick
+        
         else:
-            print(cor('ERRO! Nick Name deve conter apenas letras e/ou números '
-                           'de 3 a 12 caracteres no máximo\n', 4))
+            print(cor("ERRO! Nickname deve conter de 3 a 12 caracteres (apenas letras e ou números) \n", 4))
