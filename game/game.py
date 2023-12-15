@@ -1,5 +1,5 @@
 from palavras import dict_palavras
-import control_filters as cf
+from control_filters import *
 from random import choice
 from time import sleep
 from operator import itemgetter
@@ -13,7 +13,7 @@ record = []
 lista_placares = []
 
 
-def palavra_dica():
+def jogar_palavra():
     """ Seleciona a palavra (e suas dicas) para o jogo
 
     :return: False (caso não haja mais palavras para jogar)
@@ -25,10 +25,9 @@ def palavra_dica():
     if not copia_palavras:
         return False
 
-    # Seleciona a palavra e dicas / contabiliza no total de palavras jogadas / remove a palavra jogada
-    palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
-    palavras_jogadas += 1
-    copia_palavras.pop(palavra_selecionada)
+    palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))  # Seleciona a palavra e dicas a ser jogada
+    palavras_jogadas += 1                                                      # Contabiliza ao total de palavras jogadas
+    copia_palavras.pop(palavra_selecionada)                                    # Remove a palavra jogada
 
     return verificar_resp(palavra_selecionada, dicas_palavra)
 
@@ -52,24 +51,24 @@ def verificar_resp(palavra, dicas):
         print(f'| {f"Palavra com {len(palavra)} letras":^48} |\n'
               f'{"=" * 52}')
         for dica in dicas[:cont + 1]:
-            print(cf.cor(f'[ {dica.upper()} ]', 5), end=' ')
+            print(cor(f'[ {dica.upper()} ]', 5), end=' ')
         print()
         # --------------------------------------------------------------------------------------------- PRINT
 
-        print(f'\nA {cont + 1}ª dica é [{cf.cor(next(dica_iter), 2)}], Qual a palavra? ')
+        print(f'\nA {cont + 1}ª dica é [{cor(next(dica_iter), 2)}], Qual a palavra? ')
         while True:
             resposta = input('|> ')
             if resposta == "":
-                print(cf.cor("ERRO! Resposta inválida, tente novamente...", 4))
+                print(cor("ERRO! Resposta inválida, tente novamente...", 4))
             else:
                 break
 
         # Verifica a resposta
         if resposta.lower() == palavra:
-            print(f'\nAcertou! {cf.cor(palavra.upper(), 1)} => ganhou {cf.cor(str(pontos) + " pontos", 1)}\n')
+            print(f'\nAcertou! {cor(palavra.upper(), 1)} => ganhou {cor(str(pontos) + " pontos", 1)}\n')
 
             # Adiciona a palavra e pontos na lista "acertos", e soma os pontos na pontuação total "pontuacao"
-            acertos.append(f'{cf.cor(palavra.upper(), 1)} (acertou na {cont + 1}ª dica: {pontos}P)')
+            acertos.append(f'{cor(palavra.upper(), 1)} (acertou na {cont + 1}ª dica: {pontos}P)')
             pontuacao += pontos
 
             sleep(1)
@@ -77,13 +76,13 @@ def verificar_resp(palavra, dicas):
 
         else:
             # Se errada, passa para a próxima dica
-            print(f'\n{cf.cor("ERROOOUU!", 3)}', end=' ')
+            print(f'\n{cor("ERROOOUU!", 3)}', end=' ')
             print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
-            sleep(2)
-
+            sleep(1)
+    
     print("[ 1 ] Próxima Palavra \n[ 2 ] Voltar ao Menu")
-    if cf.continuar(1, 2):
-        palavra_dica()
+    if continuar(1, 2):
+        jogar_palavra()
 
     return True
 
@@ -96,19 +95,19 @@ def pontos_acertos(nick_pts=''):
     os.system('cls')
 
     # PRINT (pontuação) --------------------------------------------------------------------
-    print(f'<< {cf.cor("SUA PONTUAÇÃO", 1)} >>'.center(50, '='),
+    print(f'<< {cor("SUA PONTUAÇÃO", 1)} >>'.center(50, '='),
           f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'\nPontuação total: {cf.cor(str(pontuacao) + " pontos", 1)}\n'
+    print(f'\nPontuação total: {cor(str(pontuacao) + " pontos", 1)}\n'
           f'{"-" * 42}')
 
     # PRINT (record) -----------------------------------------------------------------------
     if pontuacao > record[1]:
-        print(f'Parabéns 🎉 {cf.cor(nick_pts, 3)}, é o novo Recordista\n')
-        print(f' RECORD [ {pontuacao}P 👑{cf.cor(nick_pts, 3)} ]'.center(49))
+        print(f'Parabéns 🎉 {cor(nick_pts, 3)}, é o novo Recordista\n')
+        print(f' RECORD [ {pontuacao}P 👑{cor(nick_pts, 3)} ]'.center(49))
     else:
-        print(f'RECORD [ {record[1]}P 👑{cf.cor(record[0], 3)} ]'.center(49))
+        print(f'RECORD [ {record[1]}P 👑{cor(record[0], 3)} ]'.center(49))
     print()
     # -------------------------------------------------------------------------------- PRINT
     os.system('pause')
@@ -128,11 +127,11 @@ def reiniciar_jogo(nova_partida=False):
         pontuacao = 0
         palavras_jogadas = 0
     else:
-        print(f'\n{cf.cor("ATENÇÃO!", 4)}: Isso reiniciará o jogo, zerando sua pontuação! '
+        print(f'\n{cor("ATENÇÃO!", 4)}: Isso reiniciará o jogo, zerando sua pontuação! '
               f'Deseja continuar [S/N]?')
-        if cf.continuar('S', 'N'):
+        if continuar('S', 'N'):
             print()
-            for i in cf.progressbar(range(100), 'Reiniciando Partida: ', 30):
+            for i in progressbar(range(100), 'Reiniciando Partida: ', 30):
                 sleep(0.03)
 
             copia_palavras = dict_palavras.copy()
@@ -140,7 +139,7 @@ def reiniciar_jogo(nova_partida=False):
             pontuacao = 0
             palavras_jogadas = 0
 
-            print(f'{cf.cor("PARTIDA REINICIADA COM SUCESSO!", 3)}\n')
+            print(f'{cor("PARTIDA REINICIADA COM SUCESSO!", 3)}\n')
             os.system('pause')
 
 
@@ -153,16 +152,16 @@ def save_placar(arquivo, nick, pontos):
     """
 
     print("\nSair e salvar pontuação [S/N] ou [C] para cancelar? ")
-    resposta = cf.continuar('S', 'N', 'C')
+    resposta = continuar('S', 'N', 'C')
 
     if pontos != 0 and resposta is True:
         with open(arquivo, 'a', encoding='UTF-8') as save:
             save.write(f'{nick}:{pontos}\n')
             save.close()
 
-        for i in cf.progressbar(range(100), 'Salvando: ', 22):
+        for i in progressbar(range(100), 'Salvando: ', 22):
             sleep(0.04)
-        print(cf.cor('\nPONTUAÇÃO SALVA COM SUCESSO!', 3))
+        print(cor('\nPONTUAÇÃO SALVA COM SUCESSO!', 3))
         os.system('pause')
         return True
     elif resposta == 'C':
@@ -201,7 +200,7 @@ def exibir_placar(arquivo):
         for nick, pontos in ranking:
             if cont == 0:
                 record = [nick, pontos]
-                print(f'|{"👑":>2}  {cf.cor(f"{nick:.<15}", 3)} {cf.cor(f"{pontos:<3} Record", 3)}|')
+                print(f'|{"👑":>2}  {cor(f"{nick:.<15}", 3)} {cor(f"{pontos:<3} Record", 3)}|')
             else:
                 print(f'| {cont + 1:^3} {nick:.<15} {pontos:<10}|')
             if cont == 8:
@@ -214,4 +213,4 @@ def exibir_placar(arquivo):
         lista_placares.clear()
 
     except FileNotFoundError:
-        print(cf.erro_cor('\nERRO! Arquivo não encontrado\n'))
+        print(cor('\nERRO! Arquivo não encontrado\n', 4))

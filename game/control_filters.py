@@ -89,10 +89,10 @@ def continuar(Y, N, C=False):
         print(cor(f"ERRO! Opção inválida, tente novamente...", 4))
 
 
-def nick_name(arquivo):
+def nickname(arquivo):
     """ Valida o Nick Name e verifica se o mesmo já existe ou não
 
-    :param arquivo: Arquivo .TXT onde está armazenado as pontuações
+    :param arquivo: Arquivo .TXT onde está armazenado os nicknames e pontuações
     :return: Retorna o Nick-Name caso disponível, retorna False para cancelar
     """
     os.system('cls')
