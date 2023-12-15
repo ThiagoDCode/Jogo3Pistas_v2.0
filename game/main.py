@@ -10,18 +10,25 @@ if not os.path.exists('placar_geral.txt'):
         file.write(f'{"Bot"}:{6}\n')
         file.close()
 
+
 os.system('cls')
 # PRINT ------------------------------------------------------------------------------------------------
-print(f'{"="*70}'
-      f'\n|{"JOGO DAS 3 PISTAS".center(68)}|\n'
-      f'{"[ Regras ]".center(70, "=")}')
-print(f'\n1. Você deve descobrir a palavra secreta através das pistas dadas'
-      f'\n2. Você tem até 3 tentativas, cada tentativa te dá uma dica extra'
-      f'\n3. Cada dica vale uma pontuação, menor a dica, maior a pontuação\n'
-      f'\n{op.cor(2, "[ Dica 1: 10 pontos | Dica 2: 8 pontos | Dica 3: 6 pontos ]").center(78, "=")}\n')
+print(f"""
+{'='*76}
+|{'JOGO DAS 3 PISTAS'.center(74)}|
+{'[ Regras ]'.center(76, '=')}
+1. Você deve descobrir a palavra secreta através das pistas dadas!
+2. Você tem até 3 tentativas; cada tentativa te dá uma dica extra!
+3. Cada dica vale uma pontuação, quanto menos tentativas, maior a pontuação!
+
+{op.cor(2, '[1ª Dica: 10 pontos] [2ª Dica: 8 pontos] [3ª Dica: 6 pontos]').center(84, '=')}
+""")
 # ------------------------------------------------------------------------------------------------ PRINT
+
+
 os.system('pause')
 game.exibir_placar('placar_geral.txt')
+print()
 for i in op.progressbar(range(100), 'DCode', 20):
     sleep(0.04)
 

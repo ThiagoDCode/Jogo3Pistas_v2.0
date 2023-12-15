@@ -195,9 +195,10 @@ def exibir_placar(arquivo):
             if cont == 8:
                 break
             cont += 1
-        print('=' * 33)
+        print(f"{'=' * 33} \n")
         # ------------------------------------------------------------------------------------- PRINT
-        # Limpa a lista para sempre poder receber novas consultas
+
+        # Limpa a lista para receber novas consultas
         lista_placares.clear()
 
     except FileNotFoundError:
