@@ -67,15 +67,19 @@ def verificar_resp(palavra, dicas):
             acertos.append(f'{cf.cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}P)')
             pontuacao += pontos
 
-            os.system('pause')
-            return True
+            sleep(1)
+            break
+
         else:
             # Se errada, passa para a próxima dica
             print(f'\n{cf.cor(3, "ERROOOUU!")}', end=' ')
             print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
             sleep(2)
 
-    os.system('pause')
+    print("[ 1 ] Próxima Palavra \n[ 2 ] Voltar ao Menu")
+    if cf.continuar(1, 2):
+        palavra_dica()
+
     return True
 
 
@@ -119,8 +123,9 @@ def reiniciar_jogo(nova_partida=False):
         pontuacao = 0
         palavras_jogadas = 0
     else:
-        print(f'\n{cf.cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação!')
-        if cf.continuar('Deseja reiniciar? [S/N]: ', 'S', 'N'):
+        print(f'\n{cf.cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação! '
+              f'Deseja continuar [S/N]?')
+        if cf.continuar('S', 'N'):
             print()
             for i in cf.progressbar(range(100), 'Reiniciando Partida: ', 30):
                 sleep(0.03)
@@ -141,7 +146,9 @@ def save_placar(arquivo, nick, pontos):
     :param nick: Nick Name do player
     :param pontos: Pontuação do player
     """
-    resposta = cf.continuar('\nSalvar pontuação (S/N ou C para cancelar)? ', 'S', 'N', 'C')
+
+    print("\nSalvar Pontuação [S/N] ou [C] para cancelar? ")
+    resposta = cf.continuar('S', 'N', 'C')
 
     if pontos != 0 and resposta is True:
         with open(arquivo, 'a', encoding='UTF-8') as save:

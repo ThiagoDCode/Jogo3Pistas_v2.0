@@ -100,16 +100,15 @@ def verify_entry(txt: str) -> str:
             return resposta
 
 
-def continuar(texto, y, n, c=False):
+def continuar(y, n, c=False):
     """ Validação de continuar/parar/cancelar
 
-    :param texto: Texto exibido ao usuário
     :param y: Valor retornará True (ex: "S")
     :param n: Valor retornará False (ex: "N")
     :param c: (opcional) Retorna o valor da resposta
     """
     while True:
-        resposta = input(texto).strip().upper()
+        resposta = input("|> ").strip().upper()
         if resposta == str(y).upper():
             return True
         elif resposta == str(n).upper():
