@@ -52,19 +52,19 @@ def verificar_resp(palavra, dicas):
         print(f'| {f"Palavra com {len(palavra)} letras":^48} |\n'
               f'{"=" * 52}')
         for dica in dicas[:cont + 1]:
-            print(cf.cor(5, f'[ {dica.upper()} ]'), end=' ')
+            print(cf.cor(f'[ {dica.upper()} ]', 5), end=' ')
         print()
         # --------------------------------------------------------------------------------------------- PRINT
 
-        print(f'\nA {cont + 1}ª dica é [{cf.cor(2, next(dica_iter))}], Qual a palavra? ')
+        print(f'\nA {cont + 1}ª dica é [{cf.cor(next(dica_iter), 2)}], Qual a palavra? ')
         resposta = cf.verify_entry('|> ')
 
         # Verifica a resposta
         if resposta.lower() == palavra:
-            print(f'\nAcertou! {cf.cor(1, palavra.upper())} => ganhou {cf.cor(1, str(pontos) + " pontos")}\n')
+            print(f'\nAcertou! {cf.cor(palavra.upper(), 1)} => ganhou {cf.cor(str(pontos) + " pontos", 1)}\n')
 
             # Adiciona a palavra e pontos na lista "acertos", e soma os pontos na pontuação total "pontuacao"
-            acertos.append(f'{cf.cor(1, palavra.upper())} (acertou na {cont + 1}ª dica: {pontos}P)')
+            acertos.append(f'{cf.cor(palavra.upper(), 1)} (acertou na {cont + 1}ª dica: {pontos}P)')
             pontuacao += pontos
 
             sleep(1)
@@ -72,7 +72,7 @@ def verificar_resp(palavra, dicas):
 
         else:
             # Se errada, passa para a próxima dica
-            print(f'\n{cf.cor(3, "ERROOOUU!")}', end=' ')
+            print(f'\n{cf.cor("ERROOOUU!", 3)}', end=' ')
             print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
             sleep(2)
 
@@ -91,19 +91,19 @@ def pontos_acertos(nick_pts=''):
     os.system('cls')
 
     # PRINT (pontuação) --------------------------------------------------------------------
-    print(f'<< {cf.cor(1, "SUA PONTUAÇÃO")} >>'.center(50, '='),
+    print(f'<< {cf.cor("SUA PONTUAÇÃO", 1)} >>'.center(50, '='),
           f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'\nPontuação total: {cf.cor(1, str(pontuacao) + " pontos")}\n'
+    print(f'\nPontuação total: {cf.cor(str(pontuacao) + " pontos", 1)}\n'
           f'{"-" * 42}')
 
     # PRINT (record) -----------------------------------------------------------------------
     if pontuacao > record[1]:
-        print(f'Parabéns 🎉 {cf.cor(3, nick_pts)}, é o novo Recordista\n')
-        print(f' RECORD [ {pontuacao}P 👑{cf.cor(3, nick_pts)} ]'.center(49))
+        print(f'Parabéns 🎉 {cf.cor(nick_pts, 3)}, é o novo Recordista\n')
+        print(f' RECORD [ {pontuacao}P 👑{cf.cor(nick_pts, 3)} ]'.center(49))
     else:
-        print(f'RECORD [ {record[1]}P 👑{cf.cor(3, record[0])} ]'.center(49))
+        print(f'RECORD [ {record[1]}P 👑{cf.cor(record[0], 3)} ]'.center(49))
     print()
     # -------------------------------------------------------------------------------- PRINT
     os.system('pause')
@@ -123,7 +123,7 @@ def reiniciar_jogo(nova_partida=False):
         pontuacao = 0
         palavras_jogadas = 0
     else:
-        print(f'\n{cf.cor(4, "ATENÇÃO!")}: Isso reiniciará o jogo, zerando sua pontuação! '
+        print(f'\n{cf.cor("ATENÇÃO!", 4)}: Isso reiniciará o jogo, zerando sua pontuação! '
               f'Deseja continuar [S/N]?')
         if cf.continuar('S', 'N'):
             print()
@@ -135,7 +135,7 @@ def reiniciar_jogo(nova_partida=False):
             pontuacao = 0
             palavras_jogadas = 0
 
-            print(f'{cf.cor(3, "PARTIDA REINICIADA COM SUCESSO!")}\n')
+            print(f'{cf.cor("PARTIDA REINICIADA COM SUCESSO!", 3)}\n')
             os.system('pause')
 
 
@@ -196,7 +196,7 @@ def exibir_placar(arquivo):
         for nick, pontos in ranking:
             if cont == 0:
                 record = [nick, pontos]
-                print(f'|{"👑":>2}  {cf.cor(3, f"{nick:.<15}")} {cf.cor(3, f"{pontos:<3} Record")}|')
+                print(f'|{"👑":>2}  {cf.cor(f"{nick:.<15}", 3)} {cf.cor(f"{pontos:<3} Record", 3)}|')
             else:
                 print(f'| {cont + 1:^3} {nick:.<15} {pontos:<10}|')
             if cont == 8:
