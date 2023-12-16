@@ -50,14 +50,13 @@ while True:
                 match menu('JOGAR PALAVRA', 'PONTUAÇÃO', 'REINICIAR PARTIDA', 'FINALIZAR PARTIDA'):
                     
                     case 4:  # FINALIZAR PARTIDA
-                        if not game.save_placar('placar_geral.txt', nick, game.pontuacao):
+                        if not game.save_placar('placar_geral.txt', nick, game.pontos_jogador):
                             continue
                         game.reiniciar_jogo(nova_partida=True)
                         break
 
                     case 1:  # JOGAR PALAVRA
-                        if not game.jogar_palavra():
-                            print('\nParabéns! Você ZEROU todas as palavras.\n'), sleep(2)
+                        game.jogar_palavra()
 
                     case 2:  # PONTUAÇÃO
                         game.pontos_acertos(nick)

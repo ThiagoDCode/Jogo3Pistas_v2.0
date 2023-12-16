@@ -1,90 +1,75 @@
-from palavras import dict_palavras
+from palavras import lista_palavras
 from control_filters import *
 from random import choice
 from time import sleep
 from operator import itemgetter
 import os
 
-palavras_jogadas = 0
-acertos = []
-pontuacao = 0
-copia_palavras = dict_palavras.copy()
-record = []
-lista_placares = []
+copia_palavras = lista_palavras.copy()  # Faz uma cópia da Lista de Palavras
+palavras_jogadas = 0                    # Número de palavras jogadas
+acertos = []                            # Guarda as palavras acertadas pelo jogador
+pontos_jogador = 0                      # Pontuação total do jogador
+record = []                             # Armazena o recordista do ranking
+lista_raking = []                       # Armazena o ranking de jogadores
 
 
 def jogar_palavra():
-    """ Seleciona a palavra (e suas dicas) para o jogo
+    
+    global palavras_jogadas, pontos_jogador
+    global acertos
 
-    :return: False (caso não haja mais palavras para jogar)
-    """
-    os.system('cls')
-    global palavras_jogadas
-
-    # Verifica se ainda há palavras para jogar
     if not copia_palavras:
+        print(f"\nParabéns você ZEROU O GAME! Sua pontuação final foi de: {cor(str(pontos_jogador), 1)} PONTOS \n")
+        os.system("pause")
         return False
 
-    palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))  # Seleciona a palavra e dicas a ser jogada
-    palavras_jogadas += 1                                                      # Contabiliza ao total de palavras jogadas
-    copia_palavras.pop(palavra_selecionada)                                    # Remove a palavra jogada
+    palavra_selecionada, dicas_palavra = choice(list(copia_palavras.items()))
+    palavras_jogadas += 1
 
-    return verificar_resp(palavra_selecionada, dicas_palavra)
-
-
-def verificar_resp(palavra, dicas):
-    """ Exibe as dicas da palavra secreta, e compara a resposta do player com a palavra secreta.
-    Adicionando a pontuação do player, de acordo com sua resposta e dica usada.
-
-    :param palavra: Palavra secreta selecionada
-    :param dicas: Dicas da palavra secreta selecionada
-    :return: Finaliza a jogada
-    """
-    global acertos, pontuacao
-    dica_iter = iter(dicas)
-
+    # Loop com cada dica e sua respectiva pontuação
     for cont, pontos in enumerate([10, 8, 6]):
-        os.system('cls')
+        os.system("cls")
 
         # PRINT ---------------------------------------------------------------------------------------------
-        print(f'<< PALAVRA  {palavras_jogadas}/{len(dict_palavras)} >>'.center(52, '='))
-        print(f'| {f"Palavra com {len(palavra)} letras":^48} |\n'
-              f'{"=" * 52}')
-        for dica in dicas[:cont + 1]:
-            print(cor(f'[ {dica.upper()} ]', 5), end=' ')
-        print()
+        print(f"<< PALAVRA {palavras_jogadas}/{len(lista_palavras)} >>".center(52, "="))
+        print(f"| {f'Palavra com {len(palavra_selecionada)} letras':^48} |")
+        print("="*52)
+        for dica in dicas_palavra[:cont+1]:
+            print(cor(f"[ {dica.upper()} ]", 5), end=' ')
+        print("\n")
         # --------------------------------------------------------------------------------------------- PRINT
 
-        print(f'\nA {cont + 1}ª dica é [{cor(next(dica_iter), 2)}], Qual a palavra? ')
+        print(f"A {cont+1}ª dica é [{cor(dicas_palavra[cont], 2)}]. Qual a palavra?")
         while True:
-            resposta = input('|> ')
+            resposta = input("|> ")
             if resposta == "":
                 print(cor("ERRO! Resposta inválida, tente novamente...", 4))
-            else:
-                break
+                continue
+            break
 
-        # Verifica a resposta
-        if resposta.lower() == palavra:
-            print(f'\nAcertou! {cor(palavra.upper(), 1)} => ganhou {cor(str(pontos) + " pontos", 1)}\n')
+        # Verificação da resposta
+        if resposta.lower() == palavra_selecionada:
+            print(f"\nACERTOU!!! {cor(palavra_selecionada.upper(), 1)} => ganhou {cor(str(pontos), 1)} pontos \n")
 
-            # Adiciona a palavra e pontos na lista "acertos", e soma os pontos na pontuação total "pontuacao"
-            acertos.append(f'{cor(palavra.upper(), 1)} (acertou na {cont + 1}ª dica: {pontos}P)')
-            pontuacao += pontos
+            acertos.append(f"{cor(palavra_selecionada.upper(), 1)} (Acertou na {cont+1}ª dica: +{pontos}P)")
+            pontos_jogador += pontos
 
             sleep(1)
             break
 
+        # Se resposta errada, passa para a próxima dica
         else:
-            # Se errada, passa para a próxima dica
-            print(f'\n{cor("ERROOOUU!", 3)}', end=' ')
-            print('Próxima dica...\n' if cont < 2 else 'Que pena, mas sorte na próxima!\n')
+            print(f"\n{cor('ERROOOUU!!!', 3)}", end=' ')
+            print("Próxima dica... \n" if cont < 2 else "Que pena, mas sorte na próxima! \n")
             sleep(1)
+
+    copia_palavras.pop(palavra_selecionada)  # Remove a palavra jogada da lista de palavras
     
-    print("[ 1 ] Próxima Palavra \n[ 2 ] Voltar ao Menu")
+    print("[ 1 ] PRÓXIMA PALAVRA \n[ 2 ] VOLTAR AO MENU")
     if continuar(1, 2):
         jogar_palavra()
 
-    return True
+   # return True
 
 
 def pontos_acertos(nick_pts=''):
@@ -99,13 +84,13 @@ def pontos_acertos(nick_pts=''):
           f'\nVocê teve {len(acertos)} acerto(s):')
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'\nPontuação total: {cor(str(pontuacao) + " pontos", 1)}\n'
+    print(f'\nPontuação total: {cor(str(pontos_jogador) + " pontos", 1)}\n'
           f'{"-" * 42}')
 
     # PRINT (record) -----------------------------------------------------------------------
-    if pontuacao > record[1]:
+    if pontos_jogador > record[1]:
         print(f'Parabéns 🎉 {cor(nick_pts, 3)}, é o novo Recordista\n')
-        print(f' RECORD [ {pontuacao}P 👑{cor(nick_pts, 3)} ]'.center(49))
+        print(f' RECORD [ {pontos_jogador}P 👑{cor(nick_pts, 3)} ]'.center(49))
     else:
         print(f'RECORD [ {record[1]}P 👑{cor(record[0], 3)} ]'.center(49))
     print()
@@ -119,12 +104,12 @@ def reiniciar_jogo(nova_partida=False):
     :param nova_partida: (opcional) Usada para reiniciar o jogo, sempre ao iniciar uma nova partida
     """
     os.system('cls')
-    global copia_palavras, acertos, pontuacao, palavras_jogadas
+    global copia_palavras, acertos, pontos_jogador, palavras_jogadas
 
     if nova_partida:
-        copia_palavras = dict_palavras.copy()
+        copia_palavras = lista_palavras.copy()
         acertos.clear()
-        pontuacao = 0
+        pontos_jogador = 0
         palavras_jogadas = 0
     else:
         print(f'\n{cor("ATENÇÃO!", 4)}: Isso reiniciará o jogo, zerando sua pontuação! '
@@ -134,9 +119,9 @@ def reiniciar_jogo(nova_partida=False):
             for i in progressbar(range(100), 'Reiniciando Partida: ', 30):
                 sleep(0.03)
 
-            copia_palavras = dict_palavras.copy()
+            copia_palavras = lista_palavras.copy()
             acertos.clear()
-            pontuacao = 0
+            pontos_jogador = 0
             palavras_jogadas = 0
 
             print(f'{cor("PARTIDA REINICIADA COM SUCESSO!", 3)}\n')
@@ -187,10 +172,10 @@ def exibir_placar(arquivo):
         # Adiciona Nick e Pontuação numa lista, removendo a expressão "\N" da pontuação
         for placar in placares:
             placar = placar.split(':')
-            lista_placares.append([placar[0], int(placar[1].replace('\n', ''))])
+            lista_raking.append([placar[0], int(placar[1].replace('\n', ''))])
 
         # Ordena a lista de placares de acordo com os valores numéricos
-        ranking = sorted(lista_placares, key=itemgetter(1), reverse=True)
+        ranking = sorted(lista_raking, key=itemgetter(1), reverse=True)
         cont = 0
 
         # PRINT -------------------------------------------------------------------------------------
@@ -210,7 +195,7 @@ def exibir_placar(arquivo):
         # ------------------------------------------------------------------------------------- PRINT
 
         # Limpa a lista para receber novas consultas
-        lista_placares.clear()
+        lista_raking.clear()
 
     except FileNotFoundError:
         print(cor('\nERRO! Arquivo não encontrado\n', 4))
