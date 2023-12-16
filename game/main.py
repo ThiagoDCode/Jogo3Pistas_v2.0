@@ -52,7 +52,7 @@ while True:
                     case 4:  # FINALIZAR PARTIDA
                         if not game.save_placar('placar_geral.txt', nick, game.pontos_jogador):
                             continue
-                        game.reiniciar_jogo(nova_partida=True)
+                        game.restart_game()
                         break
 
                     case 1:  # JOGAR PALAVRA
@@ -62,7 +62,13 @@ while True:
                         game.pontos_acertos(nick)
 
                     case 3:  # REINICIAR PARTIDA
-                        game.reiniciar_jogo()
+                        print(f"\n{cor('ATENÇÃO!', 4)} Isso reiniciará o jogo, zerando sua pontuação. "
+                              f"Deseja continuar [S/N]?")
+                        
+                        if continuar("S", "N"):
+                            game.restart_game(True)
+                            print(f"\n{cor('PARTIDA REINICIADA COM SUCESSO!', 3)}")
+                            sleep(2)
 
         case 2:  # PLACAR GERAL
             game.exibir_placar('placar_geral.txt')

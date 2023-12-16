@@ -78,16 +78,16 @@ def pontos_acertos(nick_pts=''):
     os.system('cls')
 
     # PRINT (pontuação) --------------------------------------------------------------------
-    print(f'<< {cor("SUA PONTUAÇÃO", 1)} >>'.center(50, '='),
-          f'\nVocê teve {len(acertos)} acerto(s):')
+    print(f"<< {cor('SUA PONTUAÇÃO', 1)} >>".center(50, "="))
+    print(f"Você teve {len(acertos)} acerto(s)".center(42))
     for acerto in acertos:
         print(f' => {acerto}')
-    print(f'\nPontuação total: {cor(str(pontos_jogador) + " pontos", 1)}\n'
-          f'{"-" * 42}')
+    print(f'\nPontuação atual: {cor(str(pontos_jogador) + " pontos", 1)}')
+    print(f"-"*42)
 
     # PRINT (record) -----------------------------------------------------------------------
     if pontos_jogador > record[1]:
-        print(f'Parabéns 🎉 {cor(nick_pts, 3)}, é o novo Recordista\n')
+        print(f'Parabéns 🎉 {cor(nick_pts, 3)}, é o novo Recordista!\n')
         print(f' RECORD [ {pontos_jogador}P 👑{cor(nick_pts, 3)} ]'.center(49))
     else:
         print(f'RECORD [ {record[1]}P 👑{cor(record[0], 3)} ]'.center(49))
@@ -96,42 +96,32 @@ def pontos_acertos(nick_pts=''):
     os.system('pause')
 
 
-def reiniciar_jogo(nova_partida=False):
-    """ Reinicia a partida, zerando a pontuação e palavras jogadas
+def restart_game(reiniciar_partida=False):
+    """ Reinicia a partida.
 
-    :param nova_partida: (opcional) Usada para reiniciar o jogo, sempre ao iniciar uma nova partida
+    Args:
+        reiniciar_partida (bool, optional): True reinicia a partida e pontuação do jogador. Defaults to False.
     """
     os.system('cls')
-    global copia_palavras, acertos, pontos_jogador, palavras_jogadas
+    global copia_palavras, acertos
+    global pontos_jogador, palavras_jogadas
+    
+    if reiniciar_partida:
+        for i in progressbar(range(100), 'Reiniciando Partida: ', 30):
+            sleep(0.02)
 
-    if nova_partida:
-        copia_palavras = lista_palavras.copy()
-        acertos.clear()
-        pontos_jogador = 0
-        palavras_jogadas = 0
-    else:
-        print(f'\n{cor("ATENÇÃO!", 4)}: Isso reiniciará o jogo, zerando sua pontuação! '
-              f'Deseja continuar [S/N]?')
-        if continuar('S', 'N'):
-            print()
-            for i in progressbar(range(100), 'Reiniciando Partida: ', 30):
-                sleep(0.03)
-
-            copia_palavras = lista_palavras.copy()
-            acertos.clear()
-            pontos_jogador = 0
-            palavras_jogadas = 0
-
-            print(f'{cor("PARTIDA REINICIADA COM SUCESSO!", 3)}\n')
-            os.system('pause')
+    copia_palavras = lista_palavras.copy()
+    acertos.clear()
+    pontos_jogador = 0
+    palavras_jogadas = 0
 
 
 def save_placar(arquivo, nick, pontos):
-    """ Salva no arquivo o Nick name do player e sua pontuação
+    """ Salva no arquivo o Nickname do jogador e sua pontuação.
 
     :param arquivo: Arquivo .TXT
-    :param nick: Nick Name do player
-    :param pontos: Pontuação do player
+    :param nick: Nickname do jogador
+    :param pontos: Pontuação do jogador
     """
 
     print("\nSair e salvar pontuação [S/N] ou [C] para cancelar? ")
