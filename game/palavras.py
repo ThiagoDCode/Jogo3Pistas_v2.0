@@ -2,7 +2,7 @@
 Lista de Palavras e Dicas para o Jogo.
 """
 
-dict_palavras = {
+lista_palavras = {
     'praia': ['Férias', 'Água de Coco', 'Areia'],
     'leão': ['Rei', 'Juba', 'Selva'],
     'macaco': ['Evolução Humana', 'Banana', 'Pula Árvores'],

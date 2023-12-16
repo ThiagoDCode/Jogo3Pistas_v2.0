@@ -3,39 +3,28 @@ import os
 
 
 def menu(*options):
-    """ Menu Dict, exemplo: ('1:option1', '2:option2', '3:option3')
+    """ Menu dinâmico.
 
-    :param options: Parâmetros chave/valor ('1:option1'...)
-    :return: Retorna o nome da opção (VALOR da chave)
+    :param options: Tupla de opções ('option1', 'option2', 'option3'...)
+    :return: Retorna o número da opção
     """
     os.system('cls')
-    tamanho = 30
-    opt_dict = {}
-
-    # Separa os elementos da Tupla de acordo com, os dois pontos (:) e, adiciona ao Dicionário (chave/valor)
-    for opt in options:
-        opt_split = opt.split(':')
-        opt_dict[opt_split[0]] = opt_split[1]
-
-    # PRINT ------------------------------------------------------------------------------------------
-    print(f'+{"=" * tamanho}+')
-    print(f'|{"MENU":^{tamanho}}|')
-    print(f'+{"-" * tamanho}+')
-    for k, v in opt_dict.items():
-        print(f'|{f" [{k}] - {v}":{tamanho}}|')
-    print(f'+{"=" * tamanho}+')
-    # ------------------------------------------------------------------------------------------ PRINT
+    
+    print("+=============================+")
+    print(f"|{'MENU'.center(29)}|")
+    print("+-----------------------------+")
+    for num, opt in enumerate(options):
+        print(f"| {f'[{num+1}] - {opt}':28}|")
+    print("+=============================+")
 
     while True:
-        resposta = input('|> ')
-        if resposta not in opt_dict:
-            print(erro_cor('ERRO! Opção inválida, tente novamente...'))
-        else:
-            return opt_dict[resposta]
-
-
-def erro_cor(txt):
-    return '\033[1;31m' + txt + '\033[m'
+        try:
+            resposta = int(input("|> "))
+            if 0 < resposta <= len(options):
+                return resposta
+            raise Exception()
+        except (ValueError, Exception):
+            print(cor("ERRO! Opção inválida, tente novamente...", 4))
 
 
 def progressbar(it, prefix='', size=60, file=sys.stdout):
@@ -62,7 +51,7 @@ def progressbar(it, prefix='', size=60, file=sys.stdout):
     file.flush()
 
 
-def cor(cor_txt=0, txt=''):
+def cor(texto, num_cor=0):
     """ Colore uma string.
 
     :param cor_txt: Número da cor
@@ -70,37 +59,18 @@ def cor(cor_txt=0, txt=''):
     :return: Retorna a string colorida
     """
     cores = {
-        0: '\033[m',     # Neutro
-        1: '\033[34m',   # Azul
-        2: '\033[32m',   # Verde
-        3: '\033[93m',   # Amarelo
-        4: '\033[31m',   # Vermelho
-        5: '\033[7;32m'  # Fundo Verde
+        0: '\033[m',       # Neutro
+        1: '\033[34m',     # Azul
+        2: '\033[32m',     # Verde
+        3: '\033[93m',     # Amarelo
+        4: '\033[1;31m',   # Vermelho Negrito
+        5: '\033[1;7;32m'  # Fundo Verde
     }
 
-    return cores[cor_txt] + txt + cores[0]
+    return cores[num_cor] + texto + cores[0]
 
 
-def verify_entry(txt: str) -> str:
-    """ Valida a entrada do usuário, evitando entradas vazias ('')
-
-    Args:
-        txt (str): Texto exibido ao usuário
-
-    Returns:
-        str: Retorna a resposta do usuário validada
-    """
-    
-    while True:
-        resposta = input(txt).strip()
-
-        if resposta == '':
-            print(erro_cor('ERRO! Responda com algo válido'))
-        else:
-            return resposta
-
-
-def continuar(y, n, c=False):
+def continuar(Y, N, C=False):
     """ Validação de continuar/parar/cancelar
 
     :param y: Valor retornará True (ex: "S")
@@ -109,41 +79,43 @@ def continuar(y, n, c=False):
     """
     while True:
         resposta = input("|> ").strip().upper()
-        if resposta == str(y).upper():
+        if resposta == str(Y):
             return True
-        elif resposta == str(n).upper():
+        elif resposta == str(N):
             return False
-        elif resposta == str(c).upper():
-            return c
+        elif resposta == str(C):
+            return C
 
-        print(erro_cor(f'ERRO! Responda apenas "{y}" ou "{n}"'), end=' '), print(erro_cor(f'ou "{c}"' if c else ''))
+        print(cor(f"ERRO! Opção inválida, tente novamente...", 4))
 
 
-def nick_name(arquivo):
+def nickname(arquivo):
     """ Valida o Nick Name e verifica se o mesmo já existe ou não
 
-    :param arquivo: Arquivo .TXT onde está armazenado os placares
-    :return: Retorna o Nick-Name caso disponível, retorna False para saída
+    :param arquivo: Arquivo .TXT onde está armazenado os nicknames e pontuações
+    :return: Retorna o Nick-Name caso disponível, retorna False para cancelar
     """
     os.system('cls')
 
     while True:
-        disponivel = True
+        nick_available = True
 
-        nick = input('Nick Name: ').strip()
-        # Saída da criação de Nick-name, caso player não digite nada
-        if nick == '':
+        nick = input('Seu Nickname: ').strip()
+        if nick == '':  # Saída da criação de Nickname, caso player não digite nada
             return False
+        
         # Nick deve ter entre 3 e 12 caracteres, e ser alpha numérico
         elif 3 <= len(nick) <= 12 and nick.isalnum():
+            
             with open(arquivo, 'r', encoding='UTF-8') as file:
                 for name in file.readlines():
                     if name[:name.index(':')].lower() == nick.lower():
-                        print(erro_cor('ERRO! Nick Name indisponível\n'))
-                        disponivel = False
+                        print(cor('ERRO! Nickname indisponível\n', 4))
+                        nick_available = False
                         break
-            if disponivel:
+            
+            if nick_available:
                 return nick
+        
         else:
-            print(erro_cor('ERRO! Nick Name deve conter apenas letras e/ou números'
-                           'de 3 a 12 caracteres no máximo\n'))
+            print(cor("ERRO! Nickname deve conter de 3 a 12 caracteres (apenas letras e ou números) \n", 4))
