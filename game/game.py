@@ -69,8 +69,6 @@ def jogar_palavra():
     if continuar(1, 2):
         jogar_palavra()
 
-   # return True
-
 
 def pontos_acertos(nick_pts=''):
     """ Exibe a pontuação atual do player
