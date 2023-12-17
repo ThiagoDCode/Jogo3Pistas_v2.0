@@ -22,7 +22,9 @@ def menu(*options):
             resposta = int(input("|> "))
             if 0 < resposta <= len(options):
                 return resposta
+            
             raise Exception()
+        
         except (ValueError, Exception):
             print(cor("ERRO! Opção inválida, tente novamente...", 4))
 
@@ -79,6 +81,7 @@ def continuar(Y, N, C=False):
     """
     while True:
         resposta = input("|> ").strip().upper()
+        
         if resposta == str(Y):
             return True
         elif resposta == str(N):
