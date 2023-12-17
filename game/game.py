@@ -117,7 +117,7 @@ def restart_game(reiniciar_partida=False):
 
 
 def save_placar(arquivo, nick, pontos):
-    """ Salva no arquivo o Nickname do jogador e sua pontuação.
+    """ Salva no arquivo.TXT o Nickname do jogador e sua pontuação.
 
     :param arquivo: Arquivo .TXT
     :param nick: Nickname do jogador
@@ -136,7 +136,9 @@ def save_placar(arquivo, nick, pontos):
             sleep(0.04)
         print(cor('\nPONTUAÇÃO SALVA COM SUCESSO!', 3))
         os.system('pause')
+        
         return True
+   
     elif resposta == 'C':
         return False
     else:
@@ -156,13 +158,12 @@ def exibir_placar(arquivo):
             placares = file.readlines()
             file.close()
 
-        # Separa Nick-name e Pontuação de acordo com, os dois pontos (:)
-        # Adiciona Nick e Pontuação numa lista, removendo a expressão "\N" da pontuação
+        # Separa Nickname e Pontuação de acordo com os dois DOIS PONTOS (:), adicionando em uma lista
         for placar in placares:
             placar = placar.split(':')
-            lista_raking.append([placar[0], int(placar[1].replace('\n', ''))])
+            lista_raking.append([placar[0], int(placar[1].replace('\n', ''))])  # O 'replace' é para remover a expressão '\n', para que não seja adicionada a lista
 
-        # Ordena a lista de placares de acordo com os valores numéricos
+        # Ordena a lista de placares de acordo com os números decrescente
         ranking = sorted(lista_raking, key=itemgetter(1), reverse=True)
         cont = 0
 
